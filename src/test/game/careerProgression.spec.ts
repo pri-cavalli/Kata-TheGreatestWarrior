@@ -18,4 +18,12 @@ describe("Career Progression Test", () => {
         const careerProgression = new CareerProgression(42);
         expect(42).to.be.equals(careerProgression.getLevel());
     });
+    
+    it("Given CareerProgression When validateLevel 0 Then throws 'Invalid level'", () => {
+        expect(() => CareerProgression.validateLevel(0)).to.throws("Invalid level");
+    });
+
+    it("Given CareerProgression When validateLevel 101 Then throws 'Invalid level'", () => {
+        expect(() => CareerProgression.validateLevel(101)).to.throws("Invalid level");
+    });
 })

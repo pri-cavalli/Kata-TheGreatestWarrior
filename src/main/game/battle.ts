@@ -1,12 +1,25 @@
 import { Warrior } from "./warrior";
+import { CareerProgression } from "./carrerProgression";
+import { throws } from "assert";
 
 export class Battle {
     private warrior: Warrior;
     private enemyWarrior: Warrior;
 
-    constructor(warrior: Warrior, levelEnemy: number) {
+    private readonly DEFEATED_REPORT = "You've been defeated";
+    private readonly EASY_FIGHT_REPORT = "Easy fight";
+    private readonly GOOD_FIGHT_REPORT = "A good fight";
+    private readonly INTENSE_FIGHT_REPORT = "An intense fight";
+
+    constructor(warrior: Warrior, enemyLevel: number) {
+        CareerProgression.validateLevel(enemyLevel);
+
         this.warrior = warrior;
-        this.enemyWarrior = new Warrior(levelEnemy);
+        this.enemyWarrior = new Warrior(enemyLevel);
+    }
+
+    public getReport(): string {
+        return "A good fight";
     }
 
     public getEarnedExperience(): number {
@@ -15,8 +28,8 @@ export class Battle {
         if(this.isEnemyLevelEqual(levelDelta)) {
             return 10;
         }
-        else if(this.isEnemyLevelLesser(levelDelta)) {
-            return this.calculateEarnedExperienceAgainstLesserLevel(levelDelta * -1);
+        else if(this.isEnemyLevelLower(levelDelta)) {
+            return this.calculateEarnedExperienceAgainstLowerLevel(levelDelta * -1);
         }
         else if(this.isEnemyLevelHigher(levelDelta) && this.isEnemyDefeated(levelDelta)) {
             return this.calculateEarnedExperienceAgainstHigherLevel(levelDelta);
@@ -28,7 +41,7 @@ export class Battle {
         return levelDelta === 0;
     }
 
-    private isEnemyLevelLesser(levelDelta: number): boolean {
+    private isEnemyLevelLower(levelDelta: number): boolean {
         return levelDelta < 0;
     }
 
@@ -45,7 +58,7 @@ export class Battle {
             && this.warrior.getRank().getName() !== this.enemyWarrior.getRank().getName();
     }
 
-    private calculateEarnedExperienceAgainstLesserLevel(levelDelta: number): number {
+    private calculateEarnedExperienceAgainstLowerLevel(levelDelta: number): number {
         if(levelDelta === 1) {
             return 5;
         }
