@@ -23,4 +23,8 @@ export class Experience {
     public getValue(): number {
         return this.value;
     }
+
+    addToValue(valueToAdd: number): any {
+        this.value += valueToAdd;
+    }
 }

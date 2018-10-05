@@ -7,7 +7,8 @@ export class CareerProgression {
 
     private readonly EXPERIENCE_PER_LEVEL = 100;
 
-    constructor(experienceValue?: number) {
+    constructor(level?: number) {
+        const experienceValue: any = level * this.EXPERIENCE_PER_LEVEL || undefined;
         this.experience = new Experience(experienceValue);
     }
 
@@ -22,4 +23,9 @@ export class CareerProgression {
     public getRank(): Rank {
         return RankFactory.getRankByLevel(this.getLevel());
     }
+
+    public increaseExperience(experienceEarned: number): void {
+        this.experience.addToValue(experienceEarned);
+    }
+
 }
